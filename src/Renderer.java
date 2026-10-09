@@ -14,7 +14,7 @@ public class Renderer {
         Graphics g
     ) {
         // required camera parameters
-        Point3D cameraPos = camera.getPosition();
+        Vector3D cameraPos = camera.getPosition();
         Rotation3D cameraRotation = camera.getRotation();
 
         // creating projection plane
@@ -50,23 +50,21 @@ public class Renderer {
 
     private static ProjectionPlane.ProjectionPoint projectPoint(
         ProjectionPlane plane,
-        Point3D point,
-        Point3D cameraPos,
+        Vector3D point,
+        Vector3D cameraPos,
         Rotation3D cameraRotation
     ) {
-        Point3D inCameraCoords = point.subtract(cameraPos);
-        inCameraCoords = inCameraCoords.rotateAroundOrigin(
-            cameraRotation.multiply(-1)
-        );
+        Vector3D inCameraCoords = point.subtract(cameraPos);
+        inCameraCoords = cameraRotation.inverse().apply(inCameraCoords);
         return plane.projectPoint(inCameraCoords);
     }
 
     private static void drawEdge(
         Graphics g,
         ProjectionPlane plane,
-        Point3D vertexA,
-        Point3D vertexB,
-        Point3D cameraPos,
+        Vector3D vertexA,
+        Vector3D vertexB,
+        Vector3D cameraPos,
         Rotation3D cameraRotation
     ) {
         // Projecting both vertices on the projection plane

@@ -27,8 +27,8 @@ public class Main {
         });
 
         // adding a listener for key presses
-        KeyInput input = new KeyInput();
-        canvas.addKeyListener(input);
+        CameraControl cameraControl = new CameraControl();
+        canvas.addKeyListener(cameraControl);
         canvas.setFocusable(true);
         canvas.requestFocus();
 
@@ -38,14 +38,20 @@ public class Main {
 
         // initializing the camera
         Camera camera = new Camera();
-        camera.setPosition(0.3, -0.5, -5);
+        camera.setPosition(new Vector3D(0, 0, -5));
 
         // canvas buffer strategy
         canvas.createBufferStrategy(2);
         BufferStrategy strategy = canvas.getBufferStrategy();
 
         // main render loop
+        long lastFrameTime = System.nanoTime();
         while (frame.isDisplayable()) {
+            long frameStart = System.nanoTime();
+            double deltaTime = (frameStart - lastFrameTime) / 1e9;
+            lastFrameTime = frameStart;
+            cameraControl.update(camera, deltaTime);
+
             Graphics graphics = strategy.getDrawGraphics();
             Renderer.render(
                 scene,

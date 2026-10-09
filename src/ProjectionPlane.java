@@ -37,7 +37,7 @@ public class ProjectionPlane {
      * @param point point to be projected on the plane (camera coordinates)
      * @return projection coordinates or null
      */
-    public ProjectionPoint projectPoint(Point3D point) {
+    public ProjectionPoint projectPoint(Vector3D point) {
         // if point is closer to camera then projection plane, null is returned
         if (point.z() < this.distance) return null;
         // calculating projection coordinates

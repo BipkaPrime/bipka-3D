@@ -1,10 +1,10 @@
-record SegmentRecord(int vertexA, int vertexB) {}
-
 public class Mesh {
-    private Point3D[] vertices;
+    public record SegmentRecord(int vertexA, int vertexB) {}
+
+    private Vector3D[] vertices;
     private SegmentRecord[] edges;
 
-    public Mesh(Point3D[] vertices, SegmentRecord[] edges) {
+    public Mesh(Vector3D[] vertices, SegmentRecord[] edges) {
         this.vertices = vertices;
         this.edges = edges;
     }
@@ -13,12 +13,12 @@ public class Mesh {
         return edges.length;
     }
 
-    public Point3D getEdgeVertexA(int index) {
+    public Vector3D getEdgeVertexA(int index) {
         int vertIdx = this.edges[index].vertexA();
         return vertices[vertIdx];
     }
 
-    public Point3D getEdgeVertexB(int index) {
+    public Vector3D getEdgeVertexB(int index) {
         int vertIdx = this.edges[index].vertexB();
         return vertices[vertIdx];
     }
